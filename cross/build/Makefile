@@ -18,3 +18,4 @@ all: $(TARGETS)
 
 clean:
 	rm -rf ../bin ../i686-elf ../share ../include ../libexec
+	rm -rf binutils-2.25/* gcc-5.2.0/*
