@@ -1,3 +1,6 @@
 bin
 i686-elf
 share
+lib
+include
+libexec
