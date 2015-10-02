@@ -20,6 +20,7 @@ stack_top:
 .type _start, @function
 _start:
   movl $stack_top, %esp
+  call kern_main
   cli
   hlt
 .Lloop:

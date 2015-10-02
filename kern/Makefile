@@ -5,15 +5,20 @@ export AR = $(abspath ../cross/bin/i686-elf-ar)
 export RANLIB = $(abspath ../cross/bin/i686-elf-ranlib)
 
 export CFLAGS  = -L$(abspath ../cross/lib)
-export CFLAGS += -I$(abspath ../cross/include)
+CFLAGS += -I$(abspath ../cross/include)
+CFLAGS += -I$(abspath include)
+CFLAGS += -ffreestanding -nostdlib -Wall -Wextra -std=gnu99
 
-OBJS = start.o
+OBJS = start.o kern_main.o term.o
 
 all: redwood
 
 
 %.o: %.s
 	$(AS) $< -o $@
+
+%.o: %.c
+	$(CC) -c $(CFLAGS) $< -o $@
 
 redwood: $(OBJS)
 	$(CC) $(CFLAGS) -T linker.ld -o $@ -ffreestanding -O2 -nostdlib $^
