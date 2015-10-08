@@ -21,6 +21,7 @@ enum term_color {
 };
 
 void term_color(int fg, int bg);
+void term_clear();
 void term_print(char *buf);
 
 #endif /* REDWOOD_KERN_TERM_H_ */
