@@ -2,9 +2,9 @@
 
 #include <stdint.h>
 
-void *memmove(void *dst, void *src, size_t n) {
+void *memmove(void *dst, const void *src, size_t n) {
   uint8_t *u8_dst = dst;
-  uint8_t *u8_src = src;
+  const uint8_t *u8_src = src;
   for (size_t i = 0; i < n; i++) {
     *u8_dst = *u8_src;
     u8_dst++;
@@ -14,7 +14,7 @@ void *memmove(void *dst, void *src, size_t n) {
   return dst;
 }
 
-void *memcpy(void *dst, void *src, size_t n) {
+void *memcpy(void *dst, const void *src, size_t n) {
   return memmove(dst, src, n);
 }
 

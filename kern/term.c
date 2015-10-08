@@ -42,7 +42,7 @@ void term_color(int fg, int bg) {
   color = fg | bg << 4;
 }
 
-void term_print(char *buf) {
+void term_print(const char *buf) {
   while (*buf != '\0') {
     write_char(*buf);
     buf++;
