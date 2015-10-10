@@ -54,6 +54,7 @@ static char dec_ascii(int num) {
 
 static int print_int32_dec(char str[INT32_DEC_BUF_SIZE], int32_t val) {
   int i = 0;
+  int hit_nonzero = 0;
   if (val < 0) {
     str[i++] = '-';
     val = -val;
@@ -62,7 +63,12 @@ static int print_int32_dec(char str[INT32_DEC_BUF_SIZE], int32_t val) {
   int32_t power = 1000000000;
   while (power != 0) {
     int num = val / power;
-    str[i++] = dec_ascii(num);
+    if (num != 0) {
+      hit_nonzero = 1;
+    }
+    if (hit_nonzero) {
+      str[i++] = dec_ascii(num);
+    }
     val = val - (num) * power;
     power /= 10;
   }
