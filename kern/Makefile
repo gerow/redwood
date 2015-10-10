@@ -9,7 +9,7 @@ CFLAGS += -I$(abspath ../cross/include)
 CFLAGS += -I$(abspath include)
 CFLAGS += -ffreestanding -nostdlib -Wall -Wextra -std=gnu99
 
-OBJS = start.o kern_main.o term.o util.o
+OBJS = start.o kern_main.o term.o util.o mm.o
 
 all: redwood
 

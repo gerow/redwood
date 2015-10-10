@@ -1,5 +1,7 @@
 #include "redwood/term.h"
 
+#include <stdarg.h>
+#include <stddef.h>
 #include <stdint.h>
 
 #include "redwood/util.h"
@@ -47,6 +49,18 @@ void term_print(const char *buf) {
     write_char(*buf);
     buf++;
   }
+}
+
+int term_printf(const char *format, ...) {
+  /* This is a hack. Should probably be able to print directly to the term. */
+  char buf[256];
+
+  va_list ap;
+  va_start(ap, format);
+  int rv = vsnprintf(buf, sizeof(buf), format, ap);
+  term_print(buf);
+  va_end(ap);
+  return rv;
 }
 
 void term_clear() {

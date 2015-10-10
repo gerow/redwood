@@ -23,5 +23,6 @@ enum term_color {
 void term_color(int fg, int bg);
 void term_clear();
 void term_print(const char *buf);
+int term_printf(const char *format, ...) __attribute__ ((format (printf, 1, 2)));
 
 #endif /* REDWOOD_KERN_TERM_H_ */
