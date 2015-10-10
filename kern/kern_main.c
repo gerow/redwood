@@ -15,6 +15,8 @@ void kern_main(multiboot_info_t *boot_info) {
   term_print(buf);
   snprintf(buf, sizeof(buf), "high memory size: %dk\n", boot_info->mem_upper);
   term_print(buf);
+  snprintf(buf, sizeof(buf), "UINT32 hex is 0x%x\n", 0xdeadbeef);
+  term_print(buf);
   /*
   for (int i = 0; i < 31; i++) {
     char buf[128];

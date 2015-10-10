@@ -6,7 +6,8 @@
  * This includes enough room for a full 32 bit intger, a negative sign, and a
  * null character
  */
-#define INT32_BUF_SIZE 12
+#define INT32_DEC_BUF_SIZE 12
+#define UINT32_HEX_BUF_SIZE 9
 
 void *memmove(void *dst, const void *src, size_t n) {
   uint8_t *u8_dst = dst;
@@ -43,7 +44,7 @@ size_t strlen(const char *s) {
   return len;
 }
 
-static char num_ascii(int num) {
+static char dec_ascii(int num) {
   if (num < 0 || num > 9) {
     return '?';
   }
@@ -51,7 +52,7 @@ static char num_ascii(int num) {
   return '0' + num;
 }
 
-static int print_int32(char str[INT32_BUF_SIZE], int32_t val) {
+static int print_int32_dec(char str[INT32_DEC_BUF_SIZE], int32_t val) {
   int i = 0;
   if (val < 0) {
     str[i++] = '-';
@@ -61,13 +62,34 @@ static int print_int32(char str[INT32_BUF_SIZE], int32_t val) {
   int32_t power = 1000000000;
   while (power != 0) {
     int num = val / power;
-    str[i++] = num_ascii(num);
+    str[i++] = dec_ascii(num);
     val = val - (num) * power;
     power /= 10;
   }
   str[i] = '\0';
 
   return i;
+}
+
+static char hex_ascii(int num) {
+  if (num < 0 || num > 0xf) {
+    return '?';
+  }
+
+  if (num >= 0xa) {
+    return 'a' + (num - 0xa);
+  }
+  return '0' + num;
+}
+
+static int print_uint32_hex(char str[UINT32_HEX_BUF_SIZE], uint32_t val) {
+  for (int i = 0; i < (int) sizeof(val) * 2; i++) {
+    str[UINT32_HEX_BUF_SIZE - 2 - i] = hex_ascii(val & 0xf);
+    val >>= 4;
+  }
+  str[UINT32_HEX_BUF_SIZE - 1] = '\0';
+
+  return UINT32_HEX_BUF_SIZE;
 }
 
 void buf_append(char **buf, size_t *size, const char *str, size_t *size_needed) {
@@ -102,8 +124,15 @@ int vsnprintf(char *str, size_t size, const char *format, va_list ap) {
         }
         case 'd': {
           int d = va_arg(ap, int);
-          char num[INT32_BUF_SIZE] = {0};
-          print_int32(num, d);
+          char num[INT32_DEC_BUF_SIZE] = {0};
+          print_int32_dec(num, d);
+          buf_append(&buf, &buf_size, num, &size_needed);
+          break;
+        }
+        case 'x': {
+          uint32_t x = va_arg(ap, uint32_t);
+          char num[UINT32_HEX_BUF_SIZE] = {0};
+          print_uint32_hex(num, x);
           buf_append(&buf, &buf_size, num, &size_needed);
           break;
         }
@@ -118,7 +147,7 @@ int vsnprintf(char *str, size_t size, const char *format, va_list ap) {
     format++;
   }
 
-  buf_appendc(&buf, &buf_size, *format, &size_needed);
+  buf_appendc(&buf, &buf_size, '\0', &size_needed);
   /* 
    * According to the spec this shouldn't include the size needed for the null
    * character.
