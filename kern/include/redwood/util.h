@@ -2,6 +2,7 @@
 
 #include <stdarg.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #define MIN(A, B) ((A) < (B) ? (A) : (B))
 #define MAX(A, B) ((A) > (B) ? (A) : (B))
@@ -15,5 +16,10 @@ size_t strlen(const char *s);
 int vsnprintf(char *str, size_t size, const char *format, va_list ap);
 int snprintf(char *str, size_t size, const char *format, ...)
   __attribute__ ((format (printf, 3, 4)));
+
+uint8_t inb(uint16_t addr);
+uint16_t inw(uint16_t addr);
+void outb(uint16_t addr, uint8_t val);
+void outw(uint16_t addr, uint16_t val);
 
 #endif /* REDWOOD_KERN_UTIL_H_ */
