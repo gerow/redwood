@@ -108,7 +108,7 @@ void buf_append(char **buf, size_t *size, const char *str, size_t *size_needed) 
 }
 
 void buf_appendc(char **buf, size_t *size, char c, size_t *size_needed) {
-  char str[2] = {c, '\0'};
+  char str[] = {c, '\0'};
   buf_append(buf, size, str, size_needed);
 }
 
@@ -121,6 +121,10 @@ int vsnprintf(char *str, size_t size, const char *format, va_list ap) {
       format++;
       if (*format == '\0') {
         break;
+      }
+      if (*format == 'l') {
+        /* Just be like... everything is long yo */
+        format++;
       }
       switch (*format) {
         case 's': {
