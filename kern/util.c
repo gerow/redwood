@@ -157,15 +157,11 @@ int vsnprintf(char *str, size_t size, const char *format, va_list ap) {
     format++;
   }
 
-  buf_appendc(&buf, &buf_size, '\0', &size_needed);
-  /* 
-   * According to the spec this shouldn't include the size needed for the null
-   * character.
-   */
-  size_needed--;
-
-  /* Ensure we always end with a null char. */
-  str[size - 1] = '\0';
+  if (buf_size != 0) {
+    *buf = '\0';
+  } else {
+    str[size - 1] = '\0';
+  }
 
   return size_needed;
 }
