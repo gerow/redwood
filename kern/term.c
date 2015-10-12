@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "redwood/util.h"
+#include "redwood/libc.h"
 
 static const int COLS = 80;
 static const int ROWS = 25;

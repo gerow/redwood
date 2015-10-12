@@ -1,6 +1,6 @@
 #include "redwood/com.h"
 
-#include "redwood/util.h"
+#include "redwood/system.h"
 
 /*
  * Relevant datasheets:
