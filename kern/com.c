@@ -2,6 +2,11 @@
 
 #include "redwood/util.h"
 
+/*
+ * Relevant datasheets:
+ * http://www.ti.com/lit/ds/symlink/pc16550d.pdf
+ */
+
 /* Offsets */
 #define DATA 0
 #define INTERRUPTS 1
