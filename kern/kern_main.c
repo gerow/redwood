@@ -3,9 +3,12 @@
 
 #include "gnu/multiboot.h"
 #include "redwood/com.h"
+#include "redwood/log.h"
 #include "redwood/mm.h"
 #include "redwood/term.h"
 #include "redwood/util.h"
+
+#define LOG_PREFIX "kern_main: "
 
 void kern_main(multiboot_info_t *boot_info) {
   term_clear();
@@ -19,5 +22,6 @@ void kern_main(multiboot_info_t *boot_info) {
 
   com_init();
   com_print(COM1, "Hello COM1!\n");
+  log_info("This is a logging test!");
   return;
 }
