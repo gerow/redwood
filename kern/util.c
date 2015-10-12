@@ -174,7 +174,7 @@ int snprintf(char *str, size_t size, const char *format, ...) {
   return rv;
 }
 
-uint8_t inb(uint16_t addr) {
+uint8_t port_inb(uint16_t addr) {
   uint8_t out = 0;
 
   asm volatile ("inb %1, %0\r\n"
@@ -184,7 +184,7 @@ uint8_t inb(uint16_t addr) {
   return out;
 }
 
-uint16_t inw(uint16_t addr) {
+uint16_t port_inw(uint16_t addr) {
   uint16_t out = 0;
 
   asm volatile ("inw %1, %0\r\n"
@@ -194,13 +194,13 @@ uint16_t inw(uint16_t addr) {
   return out;
 }
 
-void outb(uint16_t addr, uint8_t val) {
+void port_outb(uint16_t addr, uint8_t val) {
   asm volatile ("outb %0, %1\r\n"
                 : /* No output */
                 : "r" (val), "dN" (addr));
 }
 
-void outw(uint16_t addr, uint16_t val) {
+void port_outw(uint16_t addr, uint16_t val) {
   asm volatile ("outw %0, %1\r\n"
                 : /* No output */
                 : "r" (val), "dN" (addr));

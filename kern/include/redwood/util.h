@@ -17,9 +17,9 @@ int vsnprintf(char *str, size_t size, const char *format, va_list ap);
 int snprintf(char *str, size_t size, const char *format, ...)
   __attribute__ ((format (printf, 3, 4)));
 
-uint8_t inb(uint16_t addr);
-uint16_t inw(uint16_t addr);
-void outb(uint16_t addr, uint8_t val);
-void outw(uint16_t addr, uint16_t val);
+uint8_t port_inb(uint16_t addr);
+uint16_t port_inw(uint16_t addr);
+void port_outb(uint16_t addr, uint8_t val);
+void port_outw(uint16_t addr, uint16_t val);
 
 #endif /* REDWOOD_KERN_UTIL_H_ */
